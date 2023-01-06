@@ -39,7 +39,7 @@ def SelectInfo(): #Select the stock/period/ BS or P&L to retrieve the data (by i
         SType = 'IncSta'
     else:
         print('Error input')
-    print('Period to scrap:')
+    print('Start to scrap:')
     Year = input()
 
     ListArg = [Sym,SType,Year]
@@ -56,18 +56,7 @@ def ExtractHTML(HTMLFile):
     return DataRows
 #def PartSwitch(): #The modify part to switch between BS and P&L
 
-def main():
-    ArgList = SelectInfo()
-    URL = GenerateURL(ArgList)
-    
-    Parse_HTLM = Request_n_Parse(URL)
-    HTML_data = ExtractHTML(Parse_HTLM)
-
-    data = []
-    list_header = ['Items', ArgList[2]+ '_Q1',ArgList[2]+ '_Q2',ArgList[2]+ '_Q3',ArgList[2]+ '_Q4','null']
-    data = Extract_Elements(HTML_data)
-    dataframe = pd.DataFrame(data = data, columns= list_header)
-
+def Excel_writing(dataframe,ArgList): #Using available data to write into excel file
     if (ArgList[1]=='BSheet'):
         SheetName = 'BS_'+ ArgList[2]
     elif (ArgList[1]=='IncSta'):
@@ -81,9 +70,34 @@ def main():
         dataframe.to_excel(writer,SheetName)
         writer.close()
     else:
-        dataframe.to_excel(ArgList[0] + '.xlsx',SheetName)
+        dataframe.to_excel(ArgList[0] + '.xlsx',SheetName)    
+    
+def ContinueScrap(ArgList,Indicator): #Update loop status whether to continue scrap or not ? if continue then which year to scrap
+    print('Done scarping '+ ArgList[0] + ' ' + ArgList[1] + ' for ' + ArgList[2] + ' fiscal year' )
+    print('Continue or not ? - press y for continue')
+    Indicator = input()
+    if (Indicator == 'y'):
+        print ('Scrap for the year:')
+        ArgList[2] = input()
+    return ArgList, Indicator
+
+
+
+def main():
+    ArgList = SelectInfo()
+    LoopIndicator = 'y'
+    while (LoopIndicator == 'y'):   #create a loop to scrap multiple years 
+        URL = GenerateURL(ArgList)
+        Parse_HTLM = Request_n_Parse(URL)
+        HTML_data = ExtractHTML(Parse_HTLM)
+
+        data = []
+        list_header = ['Items', ArgList[2]+ '_Q1',ArgList[2]+ '_Q2',ArgList[2]+ '_Q3',ArgList[2]+ '_Q4','null']
+        data = Extract_Elements(HTML_data)
+        dataframe = pd.DataFrame(data = data, columns= list_header)
+        
+        Excel_writing(dataframe,ArgList)
+        ArgList, LoopIndicator = ContinueScrap(ArgList,LoopIndicator)
+
 if __name__ == '__main__':
     main()
-
-    
-
