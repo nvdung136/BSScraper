@@ -31,12 +31,14 @@ def SelectInfo(): #Select the stock/period/ BS or P&L to retrieve the data (by i
     Sym = input()
     Sym = Sym.upper()
     #Can add a hash map function to find if Sym available or not
-    print('Input 1 for Balance sheet \nInput 2 for Income Statement')
+    print('Input 1 for Balance sheet \nInput 2 for Income Statement\nInput 3 for Cash Flow')
     Type = input()
     if (Type == '1'):
         SType = 'BSheet'
     elif (Type == '2'):
         SType = 'IncSta'
+    elif(Type == '3'):
+        SType = 'CashFlow'
     else:
         print('Error input')
     print('Start to scrap:')
@@ -61,6 +63,8 @@ def Excel_writing(dataframe,ArgList): #Using available data to write into excel 
         SheetName = 'BS_'+ ArgList[2]
     elif (ArgList[1]=='IncSta'):
         SheetName = 'Inc_' + ArgList[2]
+    elif (ArgList[1]=='CashFlow'):
+        SheetName = 'CF_' + ArgList[2]
 
     ExcelPath = os.path.join(ArgList[0]) + '.xlsx'   
     if(os.path.exists(ExcelPath)):
