@@ -1,0 +1,27 @@
+-------------------------------------------------------
+1> BSScraper.py 
+_ Get all prerequisite python libraries
+_ Run the script and follow instructions on CMD
+_ The report files will be written into excel file with Stock symbol corresponding file names (eg: FPT, REE, MWG ...)
+
+-------------------------------------------------------
+2> Auto macros for further analysis
+_ Create 2 new excel files for being the transform median files
+_ Create a new sheet and named it as "BS_2021" sheet in Managerial transform median file. > Import Managerial transform macros > Close the file
+_ Create a new sheet and named it as "Inc_2021" sheet in EBIT_CommonSize transform median file. > Import EBIT_CommonSize transform macros > Close the file 
+
+To transform BalanceSheet:
+_ Copy the whole "BS_20xx" sheet to median file's "BS_2021" sheet 
+_ Hit "Ctr + m" > the managerial balance sheet will be created automatically
+_ Copy the result to where it is needed (paste value)
+_ Delete the result sheet and close the median file  
+
+To transform IncomeStatement:
+_ Copy the whole "Inc_20xx" sheet to median file's "Inc_2021" sheet 
+_ Hit "Ctr + Shift + i" > the  EBIT_CommonSize sheet will be created automatically
+_ Copy the result to where it is needed (paste value)
+_ Delete the result sheet and close the median file
+
+---------------------------------------------------------
+The macros will be a bit hassels for using.
+If you have problem using my macros, reach me at nvdung136@gmail.com. I will gladly to help.
